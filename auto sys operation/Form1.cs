@@ -28,6 +28,7 @@ namespace Autosys
 
         string hh, mm, am_pm, final, time;
         public string unm = System.Windows.Forms.SystemInformation.UserName;
+        string appDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Auto Sys Operation");
 
         private void Application_ApplicationExit(object sender, EventArgs e)
         {
@@ -36,7 +37,7 @@ namespace Autosys
 
         public void Form1_Load_Default_settings()
         {
-            FileStream fs = new FileStream(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Default Config.txt", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(Path.Combine(appDataDir, "Default Config.txt"), FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
             int a = br.ReadInt32();
             int b = br.ReadInt32();
@@ -51,12 +52,12 @@ namespace Autosys
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!Directory.Exists(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation"))
-                Directory.CreateDirectory(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation");
+            if (!Directory.Exists(appDataDir))
+                Directory.CreateDirectory(appDataDir);
 
-            if (!File.Exists(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Default Config.txt"))
+            if (!File.Exists(Path.Combine(appDataDir, "Default Config.txt")))
             {
-                FileStream fs = new FileStream(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Default Config.txt", FileMode.Create, FileAccess.Write);
+                FileStream fs = new FileStream(Path.Combine(appDataDir, "Default Config.txt"), FileMode.Create, FileAccess.Write);
                 BinaryWriter bw = new BinaryWriter(fs);
                 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&//
                 //************************************************//
@@ -80,12 +81,12 @@ namespace Autosys
                 bw.Close();
             }
 
-            if (!File.Exists(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Saved Config.txt"))
-                File.Create(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Saved Config.txt");
+            if (!File.Exists(Path.Combine(appDataDir, "Saved Config.txt")))
+                File.Create(Path.Combine(appDataDir, "Saved Config.txt"));
 
 
-            if (!File.Exists(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Last Saved Config.txt"))
-                File.Create(@"C:\Users\" + unm + @"\Documents\Auto Sys Operation\Last Saved Config.txt");
+            if (!File.Exists(Path.Combine(appDataDir, "Last Saved Config.txt")))
+                File.Create(Path.Combine(appDataDir, "Last Saved Config.txt"));
             
             for (byte i = 1; i <= 12; i++)
             {
